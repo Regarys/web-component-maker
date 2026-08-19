@@ -1,10 +1,10 @@
-WebComponent Maker
+# WebComponent Maker
 
 A simple command-line project generator written in C that creates a basic web component structure from embedded HTML, CSS, and JavaScript templates.
 
-The project is designed to generate a ready-to-use web project with a single command. The templates are converted into C header files during development and embedded directly into the compiled executable, so the final maker binary does not need the original template files at runtime.
+The project is designed to generate a ready-to-use web project with a single command. The templates are converted into C header files during development and embedded directly into the compiled executable, so the final `maker` binary does not need the original template files at runtime.
 
-Features
+### Features
 
 <ul>
     <li>Generate a basic HTML, CSS, and JavaScript project structure</li>
@@ -16,7 +16,7 @@ Features
     <li>Built specifically for Linux environments</li>
 </ul>
 
-Tech Stack
+### Tech Stack
 
 <ul>
     <li>C</li>
@@ -28,33 +28,40 @@ Tech Stack
     <li>JavaScript</li>
 </ul>
 
-How It Works
+### How It Works
 
 The project starts with static templates:
 
+```text
 template/
 ├── index.html
 ├── style.css
 └── script.js
+```
 
-The templates are converted into C header files using xxd:
+The templates are converted into C header files using `xxd`:
 
+```text
 index.html
     ↓
 xxd
     ↓
 index_html.h
+```
 
 The generated header contains the file as a C byte array:
 
+```c
 unsigned char templates_index_html[] = {
     0x3c, 0x21, 0x44, ...
 };
+```
 
-When maker is compiled, these template bytes become part of the executable itself.
+When `maker` is compiled, these template bytes become part of the executable itself.
 
-At runtime, the program creates the requested directory, enters it using chdir(), and writes the embedded templates using fwrite().
+At runtime, the program creates the requested directory, enters it using `chdir()`, and writes the embedded templates using `fwrite()`.
 
+```text
 ./maker panel
       ↓
 mkdir("panel")
@@ -64,36 +71,47 @@ chdir("panel")
 create index.html
 create style.css
 create script.js
+```
 
-Usage
+### Usage
 
 Compile the program:
 
+```bash
 gcc maker.c -o maker
+```
 
 Run the program with a project name:
 
+```bash
 ./maker panel
+```
 
 The generated project will look like:
 
+```text
 panel/
 ├── index.html
 ├── style.css
 └── script.js
+```
 
-The compiled maker executable can then be moved somewhere else and used independently because the templates are already embedded into the binary.
+The compiled `maker` executable can then be moved somewhere else and used independently because the templates are already embedded into the binary.
 
 For example:
 
+```bash
 ./maker navbar
+```
 
+```text
 navbar/
 ├── index.html
 ├── style.css
 └── script.js
+```
 
-Future Updates
+### Future Updates
 
 Possible improvements for future versions:
 
