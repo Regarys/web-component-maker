@@ -40,6 +40,12 @@ template/
 ```
 
 The templates are converted into C header files using `xxd`:
+```bash
+xxd -i template/index.html > index_html.h
+xxd -i template/style.css > style_css.h
+xxd -i template/script.js > script_js.h
+```
+
 
 ```text
 index.html
